@@ -31,7 +31,24 @@ namespace API_Demo.Data
         }
 
         public IEnumerable<Product> GetProducts() => Products.Local.ToList();
-        
-        
+
+        public bool AddQuestion(int id, string question)
+        {
+            try
+            {
+                var productUnderQuestion = Products.Local.Single(c => c.Id == id);
+                productUnderQuestion.Question.Append(new QandA()
+                {
+                    Id = 1,
+                    Question = question,
+                    Answer = null
+                });
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

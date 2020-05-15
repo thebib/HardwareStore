@@ -18,26 +18,18 @@ namespace API_Demo.Model
         public double Price { get; set; }
         public Promotion Promotion { get; set; }
         public int AmountTraded { get; set; }
-        public IEnumerable<Feedback> Feedback { get; set; }
+        public IEnumerable<QandA> Question { get; set; }
         public string Image { get; set; }
     }
 
-    public class Feedback
+    public class QandA
     {
-        [Key]
-        public int Id { get; set; }
+        [Key] public int Id { get; set; }
         
-        public string User { get; set; }
-        public string Review { get; set; }
-        public int Rating { get; set; }
+        public string Question { get; set; }
+        public string Answer { get; set; }
     }
 
-    public enum DeliveryOption
-    {
-        NextDay,
-        StandardDelivery,
-        FreeStandard
-    }
 
     public enum ProductCategory
     {
