@@ -1,14 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
 using API_Demo.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
 
 namespace API_Demo.Model
 {
     public class Product
     {
+        public Product()
+        {
+            Questions = new List<Question>();
+            Id = _idGenerator;
+            _idGenerator++;
+        }
+
+        private static int _idGenerator = 1;
         
-        [Key]
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -18,16 +29,30 @@ namespace API_Demo.Model
         public double Price { get; set; }
         public Promotion Promotion { get; set; }
         public int AmountTraded { get; set; }
-        public IEnumerable<QandA> Question { get; set; }
+        public ICollection<Question> Questions { get; }
         public string Image { get; set; }
+
+        public List<ShippingOption> ShippingOptions { get; set; }
     }
 
-    public class QandA
+
+    public class Question
     {
-        [Key] public int Id { get; set; }
+        public Question()
+        {
+            Id = _idGenerator;
+            DateAdded = DateTime.Now;
+            _idGenerator++;
+        }
         
-        public string Question { get; set; }
+        private static int _idGenerator = 1;
+
+        public int Id { get; }
+        public string Value { get; set; }
+        
         public string Answer { get; set; }
+        
+        public DateTime DateAdded { get; set; }
     }
 
 

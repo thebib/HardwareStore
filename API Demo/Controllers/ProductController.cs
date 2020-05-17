@@ -11,33 +11,26 @@ namespace API_Demo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Catalog : Controller
+    public class ProductController : Controller
     {
-        public ProductDbContext _context;
-        
-        public Catalog(ProductDbContext context)
-        {
-            this._context = context;
-        }
-
         [HttpGet]
         public IEnumerable<Product> GetAllProducts([FromQuery] double? min, [FromQuery] double? max)
         {
             var minimumPrice = min ?? 0;
             var maximumPrice = max ?? double.MaxValue; 
             
-            IEnumerable<Product> products = _context.GetProducts()
+            IEnumerable<Product> products = HardwareStoreData.GetProducts()
                 .Where(c => c.Price > minimumPrice && c.Price < maximumPrice);
             return products;
         }
 
-        [HttpGet("{category}")]
+        [HttpGet("{Category}")]
         public IEnumerable<Product> GetProductByCategory([FromQuery] double? min, [FromQuery] double? max, string category)
         {
             var minimumPrice = min ?? 0;
             var maximumPrice = max ?? double.MaxValue; 
 
-            IEnumerable<Product> products = _context.GetProducts()
+            IEnumerable<Product> products = HardwareStoreData.GetProducts()
                 .Where(c => c.Category.ToString() == category)
                 .Where(c => c.Price > minimumPrice && c.Price < maximumPrice);
            
